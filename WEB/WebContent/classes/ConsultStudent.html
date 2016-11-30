@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Consult Student</title>
+<link rel="stylesheet" type="text/css" href="../css/style.css">
+<script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+<script>
+	function ConsultStudent() {
+		var xhttp;
+		xhttp = new XMLHttpRequest();
+		xhttp.onreadystatechange = function() {
+			if (this.readyState == 4 && this.status == 200) {
+				document.getElementById("consult").innerHTML = this.responseText;
+			}
+		};
+		cpf = document.getElementById("cpf").value;
+		xhttp.open("GET", "./StudentConsultController?cpf=" + cpf, true);
+		xhttp.send();
+	}
+</script>
+</head>
+
+<body>
+	<div class="sidebar">
+		<h2>Menu</h2>
+		<ul>
+			<li><a href="index.html">Index</a></li>
+			<li><a href="IncludeStudent.html">Include Student</a></li>
+			<li><a href="ConsultAllStudents.html">Consult All Students</a></li>
+			<li><a href="EditStudent.html">Edit Student</a></li>
+			<li><a href="DeleteStudent.html">Delete Student</a></li>
+		</ul>
+	</div>
+
+	<div class="content">
+		<img src="../css/icon.png" alt="icon" class="menu-bar">
+		<h1 class="h">We Are The Curriculum Senders</h1>
+		
+		<div id="interface">
+			<form id="form" action="Javascript:ConsultStudent(this.value)"
+				method="get" name="form_consult">
+				<h1 class="h1">Consult Student</h1>
+				<p>
+					CPF: <input name="txt_cpf" class="cpfConsult" id="cpf" type="text" min="0" 
+					pattern="\d{3}\.\d{3}\.\d{3}-\d{2}" title="Write CPF in this format xxx.xxx.xxx-xx"
+					placeholder="Insert cpf" required="required"/>
+				</p>
+				<input name="bt_consult" type="submit" class="button"
+					value="Consult Student" />
+			</form>
+			<p>&nbsp;</p>
+			<div id="consult"></div>
+		</div>
+	</div>
+	<script src="js/open.js"></script>
+</body>
+</html>

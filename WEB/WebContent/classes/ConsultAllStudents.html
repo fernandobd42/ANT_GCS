@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Consult All Students</title>
+<link rel="stylesheet" type="text/css" href="../css/style.css">
+<script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+<script>
+	function ConsultAllStudents() {
+		var xhttp;
+		xhttp = new XMLHttpRequest();
+		xhttp.onreadystatechange = function() {
+			if (this.readyState == 4 && this.status == 200) {
+				document.getElementById("consultAll").innerHTML = this.responseText;
+			}
+		};
+		xhttp.open("GET", "./StudentConsultAllController", true);
+		xhttp.send();
+	}
+</script>
+</head>
+
+<body>
+	<div class="sidebar">
+		<h2>Menu</h2>
+		<ul>
+			<li><a href="index.html">Index</a></li>
+			<li><a href="IncludeStudent.html">Include Student</a></li>
+			<li><a href="ConsultStudent.html">Consult Student</a></li>
+			<li><a href="EditStudent.html">Edit Student</a></li>
+			<li><a href="DeleteStudent.html">Delete Student</a></li>
+		</ul>
+	</div>
+	<div class="content">
+		<img src="../css/icon.png" alt="icon" class="menu-bar">
+		<h1 class="h">We Are The Curriculum Senders</h1>
+		
+		<div id="interface">
+			<form action="Javascript:ConsultAllStudents()"
+			id="form" method="get" name="form_consultAll">
+				<h1 class="h1">Consult All Students</h1>
+
+				<input name="bt_consultAll" type="submit" class="button"
+					value="Consult All Students" />
+
+			</form>
+			<p>&nbsp;</p>
+			<div id="consultAll"></div>
+		</div>
+	</div>
+	<script src="js/open.js"></script>
+
+</body>
+</html>

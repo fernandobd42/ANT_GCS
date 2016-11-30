@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Include Student</title>
+<link rel="stylesheet" type="text/css" href="../css/style.css">
+<script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+</head>
+
+<body>
+	<div class="sidebar">
+		<h2>Menu</h2>
+		<ul>
+			<li><a href="index.html">Index</a></li>
+			<li><a href="ConsultStudent.html">Consult Student</a></li>
+			<li><a href="ConsultAllStudents.html">Consult All Students</a></li>
+			<li><a href="EditStudent.html">Edit Student</a></li>
+			<li><a href="DeleteStudent.html">Delete Student</a></li>
+		</ul>
+	</div>
+	<div class="content">
+		<img src="../css/icon.png" alt="icon" class="menu-bar">
+		<h1 class="h">We Are The Curriculum Senders</h1>
+		
+		<div id="interfacex">
+			<form action="/web2aps1ra1652745/StudentIncludeController" id="form"
+				method="get" name="form_include">
+				<h1 class="h1">Include Student</h1>
+					<p>
+						Name: <input name="txt_name" type="text" required="required"
+						pattern="([a-zA-Z\-]+){3,}\s+([a-zA-Z\-]+){3,}" title="insert the first and second name"
+							placeholder="Insert your name" />
+					</p>
+					<p>
+						CPF: <input name="txt_cpf" type="text" required="required" id="cpf" min="0"
+						      pattern="\d{3}\.\d{3}\.\d{3}-\d{2}" title="Write CPF in this format xxx.xxx.xxx-xx"
+							placeholder="Insert your cpf" />
+					</p>
+					<p>
+						RA: <input name="txt_ra" type="number" required="required" min="0"
+							placeholder="Insert your ra" />
+					</p>
+					<p>
+						Email: <input name="txt_email" type="email" required="required"
+							placeholder="Insert your email" />
+					</p>
+					<p>
+						Sex: <select name="txt_sex">
+							<option value="Female">Female</option>
+							<option value="Male">Male</option>
+						</select>
+					</p>
+					<p>
+						Course: <select name="txt_course">
+							<option value="Agronomy">Agronomy</option>
+							<option value="Biology">Biology</option>
+							<option value="Bioprocess Engineering">Bioprocess Engineering</option>
+							<option value="Forest Engineering">Forest Engineering</option>
+							<option value="Software Engineering">Software Engineering</option>
+							<option value="Zootechnics">Zootechnics</option>
+						</select>
+					</p>
+					<p>
+						Street: <input name="txt_street" type="text" required="required"
+							placeholder="Insert your street" />
+					</p>
+					<p>
+						Number: <input name="txt_number" type="number" required="required" min="0"
+							placeholder="Insert your number" />
+					</p>
+					<p>
+						NeighborHood: <input name="txt_neigh" type="text"
+							required="required" placeholder="Insert your neighborhood" />
+					</p>
+					<p>
+						City: <input name="txt_city" type="text" required="required"
+							placeholder="Insert your city" />
+					</p>
+					<p>
+						State: <input name="txt_state" type="text" required="required"
+							placeholder="Insert your state" />
+					</p>
+					<p>
+						Phone: <input name="txt_phone" type="tel" required="required" pattern="[0-9]{2} [0-9]{4}-[0-9]{4}"
+							placeholder="xx xxxx-xxxx" />
+					</p>
+
+					<p>
+						Lattes: <input name="txt_lattes" type="url" required="required"
+							placeholder="Insert your lattes" />
+					</p>
+					<p>
+						Linkedin: <input name="txt_linkedin" type="url" required="required"
+							placeholder="Insert your linkedin" />
+					</p>
+
+
+					<input name="bt_include" class="button" type="submit"
+						value="Include Student" />
+			</form>
+			<p>&nbsp;</p>
+		</div>
+	</div>
+	<script src="js/open.js"></script>
+</body>
+</html>

@@ -1,0 +1,111 @@
+<?xml version="1.0" ?>
+<!--Name recebe o nome do projeto, default recebe o último target a ser executado, 
+basedir recebe o diretório onde irá executar o build-->
+<project name="web2aps1ra1652745" default="build" basedir=".">  
+	
+	<!--target delete -->
+	<target name="delete"> 
+		<delete dir="bin" /> <!--deleta o diretório bin -->
+		<delete dir="src" /> <!--deleta o diretório src --> 
+		<delete dir="res" /> <!--deleta o diretório lib -->
+		<delete dir="jar" /> <!--deleta o diretório jar -->
+		<delete dir="lib" /> <!--deleta o diretório lib -->
+		<delete dir="dist" /> <!--deleta o diretório dist -->
+	</target>
+	
+	<!--target create depende do target delete -->
+	<target name="create" depends="delete"> 
+		<mkdir dir="bin" /> <!--cria o diretório bin -->
+		<mkdir dir="src" /> <!--cria o diretório src -->
+		<mkdir dir="res" /> <!--cria o diretório res -->
+        <mkdir dir="jar" /> <!--cria o diretório jar -->
+        <mkdir dir="lib" /> <!--cria o diretório lib -->
+		<mkdir dir="dist" /> <!--cria o diretório dist -->
+	</target>
+	
+	<!--target copy depende do target create -->
+	<target name="copy" depends="create"> 
+		<!--cópia para o diretório WEB/build/src-->
+		<copy todir="/home/fernando/Eclipse/WEB/build/src"> 
+			<!--todos os pacotes do WEB/src -->
+			<fileset dir="/home/fernando/Eclipse/WEB/src" /> 
+		</copy>
+		
+		<!--cópia para o diretório WEB/build/res-->
+		<copy todir="/home/fernando/Eclipse/WEB/build/res"> 
+			<!--todos os pacotes do WEB/res -->
+			<fileset dir="/home/fernando/Eclipse/WEB/res/" ></fileset>
+		</copy>
+			
+		<!--cópia para o diretório WEB/build/lib-->
+		<copy todir="/home/fernando/Eclipse/WEB/build/lib"> 
+				<!--todos os pacotes do WEB/WebContent/WEB-INF/lib-->
+			<fileset dir="/home/fernando/Eclipse/WEB/WebContent/WEB-INF/lib/" ></fileset>
+			
+		</copy>	
+	</target>
+	
+	
+	<!-- Determina o caminho das dependencias -->
+	<path id="classpath"> 
+		<fileset dir="/home/fernando/Eclipse/WEB/build/lib/"> 
+		<include name="*.jar"/> </fileset> 
+		<fileset dir="/home/fernando/Eclipse/WEB/WebContent/WEB-INF/" excludes="**/lib/**"> 
+		<include name="*.xml"/> </fileset> 
+	</path>
+	
+	
+	<!--target compila depende do target copy -->
+	<target name="compile" depends="copy">
+			<!-- includeWEBruntime é necessário para compilar o código via WEB, compila
+		 os arquivos .java do WEB/build/src e salva os arquivos .class no WEB/build/bin -->
+		<javac includeantruntime="true" srcdir="/home/fernando/Eclipse/WEB/build/src/br/com" 
+			destdir="/home/fernando/Eclipse/WEB/build/bin" classpathref="classpath">
+			
+		</javac>
+	</target>
+			
+
+	<!--target build depende do target compile -->
+	<target name="build" depends="compile">
+		<mkdir dir="dist" /> <!--cria o diretório dist -->
+		
+		<!--cópia para o diretório WEB/build/dist-->
+		<copy todir="/home/fernando/Eclipse/WEB/build/dist"> 
+				<!--todos os pacotes do WEB/lib-->
+			<fileset dir="/home/fernando/Eclipse/WEB/WebContent" ></fileset>
+		</copy>	
+		
+		<mkdir dir="dist/WEB-INF/classes" /> <!--cria o diretório dist/classes -->
+		<!--cópia para o diretório WEB/build/dist-->
+		<copy todir="/home/fernando/Eclipse/WEB/build/dist/WEB-INF/classes"> 
+				<!--todos os pacotes do WEB/jar-->
+			<fileset dir="/home/fernando/Eclipse/WEB/build/res/" ></fileset>
+		</copy>
+		
+		<copy todir="/home/fernando/Eclipse/WEB/build/dist/WEB-INF/classes"> 
+				<!--todos os pacotes do WEB/jar-->
+			<fileset dir="/home/fernando/Eclipse/WEB/build/bin/" ></fileset>
+		</copy>	
+	</target>
+	
+	<!--target war depende do target compile -->
+    <target name="war" depends="build"> 
+		<!--compacta todos arquivos do WEB/build/bin/br/com e gera o WEB.war
+		 no WEB/lib -->
+        <war destfile="jar/WEB.war" basedir="dist" webxml="../WebContent/WEB-INF/web.xml"> <!-- webxml="WebContent/WEB-INF/web.xml" -->
+    	</war>
+	</target>
+	
+	
+	<!--target deploy, sobe o war para produção -->
+	<target name="deploy" depends="war">
+		<delete dir="/etc/tomcat7/webapps/WEB" />
+		<delete file="/etc/tomcat7/webapps/WEB.jar"/>
+		<!-- envia o war para o servidor -->
+		<copy todir="/etc/tomcat7/webapps/"> 
+				<!--todos os pacotes do WEB/jar-->
+			<fileset dir="/home/fernando/Eclipse/WEB/build/jar/" ></fileset>
+		</copy>	
+	</target>
+</project>

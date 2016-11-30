@@ -1,0 +1,1 @@
+Edit the path of DATABASE in db.properties, set the path of your project locations.

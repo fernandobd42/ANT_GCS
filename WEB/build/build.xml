@@ -8,7 +8,7 @@ basedir recebe o diretório onde irá executar o build-->
 		<delete dir="bin" /> <!--deleta o diretório bin -->
 		<delete dir="src" /> <!--deleta o diretório src --> 
 		<delete dir="res" /> <!--deleta o diretório lib -->
-		<delete dir="jar" /> <!--deleta o diretório jar -->
+		<delete dir="war" /> <!--deleta o diretório jar -->
 		<delete dir="lib" /> <!--deleta o diretório lib -->
 		<delete dir="dist" /> <!--deleta o diretório dist -->
 	</target>
@@ -18,29 +18,29 @@ basedir recebe o diretório onde irá executar o build-->
 		<mkdir dir="bin" /> <!--cria o diretório bin -->
 		<mkdir dir="src" /> <!--cria o diretório src -->
 		<mkdir dir="res" /> <!--cria o diretório res -->
-    		<mkdir dir="jar" /> <!--cria o diretório jar -->
-       		<mkdir dir="lib" /> <!--cria o diretório lib -->
+    	<mkdir dir="war" /> <!--cria o diretório jar -->
+       	<mkdir dir="lib" /> <!--cria o diretório lib -->
 		<mkdir dir="dist" /> <!--cria o diretório dist -->
 	</target>
 	
 	<!--target copy depende do target create -->
 	<target name="copy" depends="create"> 
 		<!--cópia para o diretório WEB/build/src-->
-		<copy todir="/home/fernando/Eclipse/WEB/build/src"> 
+		<copy todir="./src"> 
 			<!--todos os pacotes do WEB/src -->
-			<fileset dir="/home/fernando/Eclipse/WEB/src" /> 
+			<fileset dir="../src" /> 
 		</copy>
 		
 		<!--cópia para o diretório WEB/build/res-->
-		<copy todir="/home/fernando/Eclipse/WEB/build/res"> 
+		<copy todir="./res"> 
 			<!--todos os pacotes do WEB/res -->
-			<fileset dir="/home/fernando/Eclipse/WEB/res/" ></fileset>
+			<fileset dir="../res" ></fileset>
 		</copy>
 			
 		<!--cópia para o diretório WEB/build/lib-->
-		<copy todir="/home/fernando/Eclipse/WEB/build/lib"> 
+		<copy todir="./lib"> 
 			<!--todos os pacotes do WEB/WebContent/WEB-INF/lib-->
-			<fileset dir="/home/fernando/Eclipse/WEB/WebContent/WEB-INF/lib/" ></fileset>
+			<fileset dir="../WebContent/WEB-INF/lib" ></fileset>
 			
 		</copy>	
 	</target>
@@ -48,9 +48,9 @@ basedir recebe o diretório onde irá executar o build-->
 	
 	<!-- Determina o caminho das dependencias -->
 	<path id="classpath"> 
-		<fileset dir="/home/fernando/Eclipse/WEB/build/lib/"> 
+		<fileset dir="./lib"> 
 		<include name="*.jar"/> </fileset> 
-		<fileset dir="/home/fernando/Eclipse/WEB/WebContent/WEB-INF/" excludes="**/lib/**"> 
+		<fileset dir="../WebContent/WEB-INF/" excludes="**/lib/**"> 
 		<include name="*.xml"/> </fileset> 
 	</path>
 	
@@ -59,9 +59,8 @@ basedir recebe o diretório onde irá executar o build-->
 	<target name="compile" depends="copy">
 		<!-- includeantruntime é necessário para compilar o código.
 		Compila os arquivos .java do WEB/build/src e salva os arquivos .class no WEB/build/bin -->
-		<javac includeantruntime="true" srcdir="/home/fernando/Eclipse/WEB/build/src/br/com" 
-			destdir="/home/fernando/Eclipse/WEB/build/bin" classpathref="classpath">
-			
+		<javac includeantruntime="true" srcdir="./src/br/com" 
+			destdir="./bin" classpathref="classpath">
 		</javac>
 	</target>
 			
@@ -72,31 +71,31 @@ basedir recebe o diretório onde irá executar o build-->
 		<mkdir dir="dist" /> 
 		
 		<!--cópia para o diretório WEB/build/dist-->
-		<copy todir="/home/fernando/Eclipse/WEB/build/dist"> 
+		<copy todir="./dist"> 
 			<!--todos os pacotes do WEB/WebContent-->
-			<fileset dir="/home/fernando/Eclipse/WEB/WebContent" ></fileset>
+			<fileset dir="../WebContent" ></fileset>
 		</copy>	
 		
  	 	<!--cria o diretório classes em dist/WEB-INF -->
-		<mkdir dir="dist/WEB-INF/classes" /> 
+		<mkdir dir="./dist/WEB-INF/classes" /> 
 
 		<!--cópia para o diretório WEB/build/dist/WEB-INF/classes-->
-		<copy todir="/home/fernando/Eclipse/WEB/build/dist/WEB-INF/classes"> 
+		<copy todir="./dist/WEB-INF/classes"> 
 			<!--todos as dependências que estão em WEB/build/res-->
-			<fileset dir="/home/fernando/Eclipse/WEB/build/res/" ></fileset>
+			<fileset dir="./res/" ></fileset>
 		</copy>
 		
 		<!--cópia para o diretório WEB/build/dist/WEB-INF/classes-->
-		<copy todir="/home/fernando/Eclipse/WEB/build/dist/WEB-INF/classes"> 
+		<copy todir="./dist/WEB-INF/classes"> 
 			<!--todos os arquivos .class que estão em WEB/build/bin-->
-			<fileset dir="/home/fernando/Eclipse/WEB/build/bin/" ></fileset>
+			<fileset dir="./bin/" ></fileset>
 		</copy>	
 	</target>
 	
 	<!--target war depende do target compile -->
    	<target name="war" depends="build"> 
 		<!--compacta todos arquivos do WEB/build/bin/br/com e gera o WEB.war no WEB/jar -->
-     		<war destfile="jar/WEB.war" basedir="dist" webxml="../WebContent/WEB-INF/web.xml">
+     		<war destfile="./war/WEB.war" basedir="dist" webxml="../WebContent/WEB-INF/web.xml">
     		</war>
 	</target>
 	
@@ -106,12 +105,12 @@ basedir recebe o diretório onde irá executar o build-->
  		<!-- exclui o diretório atual -->
 		<delete dir="/etc/tomcat7/webapps/WEB" />
  		<!-- exclui o .war atual -->
-		<delete file="/etc/tomcat7/webapps/WEB.jar"/>
+		<delete file="/etc/tomcat7/webapps/WEB.war"/>
 		
 		<!-- envia para o diretorio do servidor -->
-		<copy todir="/etc/tomcat7/webapps/"> 
+		<copy todir="/etc/tomcat7/webapps"> 
 			<!--todos os pacotes do WEB/jar, no caso o WEB.war-->
-			<fileset dir="/home/fernando/Eclipse/WEB/build/jar/" ></fileset>
+			<fileset dir="./war" ></fileset>
 		</copy>	
 	</target>
 </project>
